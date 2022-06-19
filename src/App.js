@@ -13,6 +13,7 @@ class App extends React.Component {
       imgSrc: "",
       profession: "",
       check: false,
+      counter: 0,
     };
     this.btnSwitch = this.btnSwitch.bind(this);
   }
@@ -63,6 +64,7 @@ class App extends React.Component {
   };
 
   render() {
+    const { counter } = this.state;
     return (
       <>
         <this.ToggleSwitch />
@@ -71,9 +73,20 @@ class App extends React.Component {
           {this.state.bio}
           {this.state.imgSrc}
           {this.state.profession}
+          <div>Time interval since the last component was mounted in Secondes : {counter} </div>
         </div>
       </>
     );
+  }
+  componentDidMount() {
+    this.myInterval = setInterval(() => {
+      this.setState({
+        counter: this.state.counter + 1,
+      });
+    }, 1000);
+  }
+  componentWillUnmount() {
+    clearInterval(this.myInterval);
   }
 }
 
